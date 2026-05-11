@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Diary</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- ── LOGIN SCREEN ── -->
+  <div id="login-screen" class="screen">
+    <div class="login-card">
+      <div class="logo">📔</div>
+      <h1>My Diary</h1>
+      <p class="tagline">Your private space to write, reflect, and remember.</p>
+      <div id="g_id_onload"
+           data-client_id="524149027837-4oqi7b4js721tq66ksbo8thpiakt8bkq.apps.googleusercontent.com"
+           data-callback="handleCredentialResponse"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-size="large"
+           data-theme="outline"
+           data-text="sign_in_with"
+           data-shape="rectangular"
+           data-logo_alignment="left">
+      </div>
+      <p class="privacy-note">We never store your data on any server. Everything stays in your browser.</p>
+    </div>
+  </div>
+
+  <!-- ── APP SCREEN ── -->
+  <div id="app-screen" class="screen hidden">
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <span class="logo-small">📔</span>
+        <span class="app-name">My Diary</span>
+      </div>
+
+      <div class="user-info">
+        <img id="user-avatar" src="" alt="avatar" />
+        <div>
+          <p id="user-name"></p>
+          <p id="user-email"></p>
+        </div>
+      </div>
+
+      <button id="new-entry-btn" class="btn-primary">+ New Entry</button>
+
+      <div id="entries-list"></div>
+
+      <button id="logout-btn" class="btn-logout">Sign Out</button>
+    </aside>
+
+    <!-- Main content -->
+    <main id="main-content">
+      <!-- Empty state -->
+      <div id="empty-state">
+        <div class="empty-icon">✍️</div>
+        <h2>Nothing here yet</h2>
+        <p>Click <strong>+ New Entry</strong> to start writing.</p>
+      </div>
+
+      <!-- Editor -->
+      <div id="editor-panel" class="hidden">
+        <div class="editor-toolbar">
+          <input id="entry-title" type="text" placeholder="Entry title…" maxlength="100" />
+          <div class="toolbar-actions">
+            <span id="entry-date-display" class="entry-date"></span>
+            <button id="save-btn" class="btn-primary">Save</button>
+            <button id="delete-btn" class="btn-danger">Delete</button>
+          </div>
+        </div>
+        <textarea id="entry-body" placeholder="Write your thoughts here…"></textarea>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
