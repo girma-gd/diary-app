@@ -36,6 +36,18 @@
   <!-- ── APP SCREEN ── -->
   <div id="app-screen" class="screen hidden">
 
+    <!-- Mobile overlay -->
+    <div id="sidebar-overlay"></div>
+
+    <!-- Mobile top bar (hidden on desktop via CSS) -->
+    <div id="mobile-topbar" style="display:none;">
+      <button id="menu-btn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="app-title">📔 My Diary</span>
+      <button id="new-entry-mobile-btn">+ New</button>
+    </div>
+
     <!-- Sidebar -->
     <aside id="sidebar">
       <div class="sidebar-header">
@@ -70,6 +82,7 @@
       <!-- Editor -->
       <div id="editor-panel" class="hidden">
         <div class="editor-toolbar">
+          <button id="back-btn" aria-label="Back to list">← Back</button>
           <input id="entry-title" type="text" placeholder="Entry title…" maxlength="100" />
           <div class="toolbar-actions">
             <span id="entry-date-display" class="entry-date"></span>

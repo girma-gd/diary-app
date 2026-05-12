@@ -127,7 +127,10 @@ function renderEntriesList() {
       <div class="entry-item-title">${escapeHtml(entry.title || 'Untitled')}</div>
       <div class="entry-item-date">${formatDate(entry.updatedAt)}</div>
     `;
-    item.addEventListener('click', () => openEntry(entry.id));
+    item.addEventListener('click', () => {
+      openEntry(entry.id);
+      if (isMobile()) closeSidebar();
+    });
     entriesList.appendChild(item);
   });
 }
@@ -268,7 +271,55 @@ function highlightActive() {
   });
 }
 
-// ── Auto-save on Ctrl+S ───────────────────────
+// ── Mobile sidebar toggle ─────────────────────
+const sidebar         = document.getElementById('sidebar');
+const sidebarOverlay  = document.getElementById('sidebar-overlay');
+const menuBtn         = document.getElementById('menu-btn');
+const mobileTopbar    = document.getElementById('mobile-topbar');
+const newEntryMobile  = document.getElementById('new-entry-mobile-btn');
+const backBtn         = document.getElementById('back-btn');
+
+function isMobile() { return window.innerWidth <= 680; }
+
+function openSidebar() {
+  sidebar.classList.add('open');
+  sidebarOverlay.classList.add('visible');
+}
+
+function closeSidebar() {
+  sidebar.classList.remove('open');
+  sidebarOverlay.classList.remove('visible');
+}
+
+function applyMobileLayout() {
+  if (isMobile()) {
+    mobileTopbar.style.display = 'flex';
+  } else {
+    mobileTopbar.style.display = 'none';
+    closeSidebar(); // reset drawer state on resize to desktop
+  }
+}
+
+menuBtn.addEventListener('click', () => {
+  sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+});
+
+sidebarOverlay.addEventListener('click', closeSidebar);
+
+// Mobile "New" button in top bar
+newEntryMobile.addEventListener('click', () => {
+  closeSidebar();
+  newEntryBtn.click();
+});
+
+// Back button — go back to entry list on mobile
+backBtn.addEventListener('click', () => {
+  showEmptyState();
+});
+
+window.addEventListener('resize', applyMobileLayout);
+
+
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key === 's') {
     e.preventDefault();
@@ -278,3 +329,4 @@ document.addEventListener('keydown', e => {
 
 // ── Boot ──────────────────────────────────────
 tryRestoreSession();
+applyMobileLayout();
