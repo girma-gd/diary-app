@@ -16,6 +16,27 @@
       <div class="logo">📔</div>
       <h1>My Diary</h1>
       <p class="tagline">Your private space to write, reflect, and remember.</p>
+
+      <!-- Email/Password Form -->
+      <form id="login-form" class="login-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn-login">Sign In</button>
+        <p class="form-error" id="login-error"></p>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <!-- Google Sign-In -->
       <div id="g_id_onload"
            data-client_id="524149027837-4oqi7b4js721tq66ksbo8thpiakt8bkq.apps.googleusercontent.com"
            data-callback="handleCredentialResponse"
@@ -29,6 +50,7 @@
            data-shape="rectangular"
            data-logo_alignment="left">
       </div>
+
       <p class="privacy-note">We never store your data on any server. Everything stays in your browser.</p>
     </div>
   </div>

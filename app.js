@@ -19,6 +19,10 @@ const entryBody     = document.getElementById('entry-body');
 const entryDateDisp = document.getElementById('entry-date-display');
 const saveBtn       = document.getElementById('save-btn');
 const deleteBtn     = document.getElementById('delete-btn');
+const loginForm     = document.getElementById('login-form');
+const loginEmailEl  = document.getElementById('login-email');
+const loginPassEl   = document.getElementById('login-password');
+const loginError    = document.getElementById('login-error');
 
 // ── State ─────────────────────────────────────
 let currentUser   = null;   // { name, email, picture, sub }
@@ -46,6 +50,52 @@ function parseJwt(token) {
     return null;
   }
 }
+
+// ── Email / Password login ────────────────────
+// Credentials are stored in localStorage (no backend — frontend-only app).
+// On first use with a new email, an account is auto-created.
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  loginError.textContent = '';
+
+  const email    = loginEmailEl.value.trim().toLowerCase();
+  const password = loginPassEl.value;
+
+  if (!email || !password) {
+    loginError.textContent = 'Please fill in both fields.';
+    return;
+  }
+
+  const accountsRaw = localStorage.getItem('diary_accounts');
+  const accounts    = accountsRaw ? JSON.parse(accountsRaw) : {};
+
+  if (accounts[email]) {
+    // Existing account — verify password
+    if (accounts[email].password !== btoa(password)) {
+      loginError.textContent = 'Incorrect password. Please try again.';
+      return;
+    }
+  } else {
+    // New account — register automatically
+    accounts[email] = {
+      password: btoa(password),
+      name:     email.split('@')[0],
+      picture:  '',
+    };
+    localStorage.setItem('diary_accounts', JSON.stringify(accounts));
+  }
+
+  currentUser = {
+    sub:     'local_' + btoa(email),
+    name:    accounts[email].name,
+    email:   email,
+    picture: accounts[email].picture || '',
+    method:  'local',
+  };
+
+  localStorage.setItem('diary_session', JSON.stringify(currentUser));
+  startApp();
+});
 
 // ── Google callback ───────────────────────────
 window.handleCredentialResponse = function (response) {
@@ -330,3 +380,7 @@ document.addEventListener('keydown', e => {
 // ── Boot ──────────────────────────────────────
 tryRestoreSession();
 applyMobileLayout();
+
+// Clear login error on input
+loginEmailEl.addEventListener('input', () => { loginError.textContent = ''; });
+loginPassEl.addEventListener('input',  () => { loginError.textContent = ''; });
