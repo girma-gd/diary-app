@@ -1,10 +1,10 @@
 # 📔 My Diary
 
-A simple, private personal diary web app built with plain HTML, CSS, and JavaScript. Users sign in with their Google account — no passwords, no backend, no database. All diary entries are stored locally in the browser.
+A simple, private personal diary web app built with plain HTML, CSS, and JavaScript. Users sign in with their Google account — no passwords, no backend, no database. All diary entries are stored locally in the browser. This project is done as an Assignment For **Computer Networks and Security** course.
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Google Sign-In (Federated Identity)** — users authenticate via Google OAuth 2.0. No username or password is stored anywhere.
 - **Private entries per user** — each Google account has its own isolated set of entries stored in the browser's `localStorage`.
@@ -16,7 +16,7 @@ A simple, private personal diary web app built with plain HTML, CSS, and JavaScr
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer       | Technology                          |
 |-------------|-------------------------------------|
@@ -29,7 +29,7 @@ A simple, private personal diary web app built with plain HTML, CSS, and JavaScr
 
 ---
 
-## 🔐 Authentication Flow
+##  Authentication Flow
 
 This app uses **Federated Identity Management** via Google as the identity provider:
 
@@ -46,7 +46,7 @@ This means:
 
 ---
 
-## 🚀 Running Locally
+##  Running Locally
 
 Because Google OAuth blocks requests from `file://` URLs, you need a local HTTP server.
 
@@ -55,23 +55,11 @@ Because Google OAuth blocks requests from `file://` URLs, you need a local HTTP 
 2. Right-click `index.html` → **Open with Live Server**
 3. App opens at `http://127.0.0.1:5500`
 
-**Option 2 — Node**
-```bash
-npx http-server -p 5500
-```
-
-**Option 3 — Python**
-```bash
-python -m http.server 5500
-```
-
-Then open `http://localhost:5500` in your browser.
-
 ### Allow localhost in Google Cloud Console
 
 After starting the server, add your local origin to the OAuth client:
 
-1. Go to [Google Cloud Console → Credentials](https://console.cloud.google.com/apis/credentials)
+1. Go to Google Cloud Console → Credentials (https://console.cloud.google.com/apis/credentials)
 2. Click your OAuth 2.0 Client ID
 3. Under **Authorized JavaScript origins**, add:
    ```
@@ -79,18 +67,6 @@ After starting the server, add your local origin to the OAuth client:
    http://127.0.0.1:5500
    ```
 4. Click **Save** and wait a few minutes for changes to propagate
-
----
-
-## 🌐 Deploying to Netlify
-
-1. Go to [netlify.com](https://netlify.com) and log in
-2. Click **Add new site → Deploy manually**
-3. Drag the project folder onto the upload area
-4. After deployment, copy your Netlify URL (e.g. `https://your-site.netlify.app`)
-5. Go back to Google Cloud Console and add the Netlify URL to **Authorized JavaScript origins**
-
----
 
 ## 📁 Project Structure
 
@@ -103,17 +79,3 @@ diary-app/
 └── README.md        # This file
 ```
 
----
-
-## 🔑 Credentials & Security Notes
-
-- The **Google OAuth Client ID** is visible in `index.html`. This is expected and safe — Client IDs are public-facing identifiers designed to be embedded in frontend code.
-- The **Client Secret** is never used in this app and must never be added to any frontend file or committed to this repository.
-- All user data (diary entries) is stored only in the user's own browser via `localStorage`. No data is sent to any server.
-- If you fork this project and use your own Google OAuth credentials, only replace the `data-client_id` value in `index.html` with your own Client ID.
-
----
-
-## 📄 License
-
-MIT — free to use and modify.
